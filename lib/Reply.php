@@ -65,8 +65,8 @@ class Reply
     private function getHelpText()
     {
         $textArr = array();
-        $textArr[] = "-: 输入普通文本, 添加新的「TODO」.";
-        $textArr[] = "-: 输入相应的数字, 删除对应的「TODO」.";
+        $textArr[] = "-: 输入普通文本, 添加新的「记事」.";
+        $textArr[] = "-: 输入相应的数字, 删除对应的「记事」.";
         $textArr[] = "-: 如有任何建立, 请发语音留言, 谢谢.";
         return implode("\r\n", $textArr);
     }

@@ -119,7 +119,7 @@ class Reply
             $newResult = $userCache->newTodo($msgContent);
             if (is_null($newResult))
             {
-                $pushStr .= "记事列表已经超过限定的「" . UserCache::MAX_TODO . "」, 无法继续添加新数据.";
+                $pushStr .= "记事列表已经超过限定的「" . UserCache::MAX_TODO . "」条, 无法继续添加新数据.";
             }
             else if ($newResult)
             {

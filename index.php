@@ -1,5 +1,7 @@
 <?php
 
+define("TOKEN", "1935595093");
+
 require_once("lib" . DIRECTORY_SEPARATOR . "Reply.php");
 require_once("lib" . DIRECTORY_SEPARATOR . "Valid.php");
 

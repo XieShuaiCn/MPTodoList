@@ -14,10 +14,10 @@ class UserCache
     }
     
     
-    private function getTodoCount($flag="1")
+    public function getTodoCount($flag="1")
     {
         $sqlStr = "SELECT COUNT(1) AS CN FROM {$this->tableName} WHERE UserKey='{$this->userKey}' ";
-        if (!empty($flag))
+        if (is_string($flag))
         {
             $sqlStr .= " AND TodoFlag='{$flag}' ";
         }
@@ -45,7 +45,7 @@ class UserCache
     public function getTodoList($flag="1")
     {
         $sqlStr = "SELECT * FROM {$this->tableName} WHERE UserKey='{$this->userKey}' ";
-        if (!empty($flag))
+        if (is_string($flag))
         {
             $sqlStr .= " AND TodoFlag='{$flag}' ";
         }

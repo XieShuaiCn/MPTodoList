@@ -5,7 +5,7 @@ require_once("UserCache.php");
 class Reply
 {
     private $myUserName = "";
-        
+    private $needTipsCount = 3;
     
     public function responseMsg($content)
     {
@@ -65,9 +65,20 @@ class Reply
     private function getHelpText()
     {
         $textArr = array();
-        $textArr[] = "-: 输入普通文本, 添加新的[TODO]";
-        $textArr[] = "-: 输入相应的数字, 删除对应的[TODO]";
+        $textArr[] = "-: 输入普通文本, 添加新的「TODO」.";
+        $textArr[] = "-: 输入相应的数字, 删除对应的「TODO」.";
         return implode("\r\n", $textArr);
+    }
+    
+    
+    private function getDoneTips(UserCache $userCache)
+    {
+        $count = $userCache->getTodoCount(null);
+        if ($count <= $this->needTipsCount)
+        {
+            return "-: 输入记事列表的序号, 删除对应的「TODO」条目.";
+        }
+        return "";
     }
     
     
@@ -88,6 +99,11 @@ class Reply
             if (is_string($doneResult))
             {
                 $pushStr .= "已完成 『{$doneResult}』";
+                $doingCount = $userCache->getTodoCount();
+                if ($doingCount < 1)
+                {
+                    $pushStr .= "\r\n\r\n您的所有事情已完成. (*^__^*) ";
+                }
             }
             else if ($doneResult === null)
             {
@@ -95,7 +111,7 @@ class Reply
             }
             else
             {
-                $pushStr .= "DB删除数据失败???";
+                $pushStr .= "DB[清理]数据失败???";
             }
         }
         else
@@ -103,15 +119,20 @@ class Reply
             $newResult = $userCache->newTodo($msgContent);
             if (is_null($newResult))
             {
-                $pushStr .= "LIST已经超过限定的「" . UserCache::MAX_TODO . "」, 无法继续添加新数据.";
+                $pushStr .= "记事列表已经超过限定的「" . UserCache::MAX_TODO . "」, 无法继续添加新数据.";
             }
             else if ($newResult)
             {
-                $pushStr .= "『{$msgContent}』 已经添加进列表.";
+                $pushStr .= "『{$msgContent}』 已经添加进记事列表.";
+                $doneTips = $this->getDoneTips($userCache);
+                if ($doneTips)
+                {
+                    $pushStr .= "\r\n({$doneTips})";
+                }
             }
             else
             {
-                $pushStr .= "DB删除数据失败???";
+                $pushStr .= "DB添加数据失败???";
             }
         }
         $doingListStr = $this->getListText($userCache);

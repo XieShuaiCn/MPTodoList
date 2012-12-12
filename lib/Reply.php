@@ -77,7 +77,7 @@ class Reply
         $count = $userCache->getTodoCount(null);
         if ($count <= $this->needTipsCount)
         {
-            return "-: 输入记事列表的序号, 删除对应的「TODO」条目.";
+            return "-: 输入记事列表的序号, 删除对应的「记事」条目.";
         }
         return "";
     }

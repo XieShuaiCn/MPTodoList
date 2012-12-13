@@ -86,6 +86,13 @@ class Reply
     private function replyTextType(SimpleXMLElement $reqObj, $toUserName)
     {
         $msgContent = trim(strip_tags((string)$reqObj->Content));
+
+        $exCludeReg = "/^Hello2BizUser$/i";
+        if (preg_match($exCludeReg, $msgContent))
+        {
+            return null;
+        }
+
         $userCache = new UserCache($toUserName);
         $regNum = "/^\d+$/";
         $helpStrArr = array("?", "？");

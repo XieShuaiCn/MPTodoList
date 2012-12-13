@@ -38,8 +38,11 @@ else if (isset($_GET["trying"]))
 // Robot
 if ($postData)
 {
-    header("Content-Type: text/xml");
     $reply = new Reply();
     $retConnect = $reply->responseMsg($postData);
-    echo $retConnect;
+    if ($retConnect)
+    {
+        header("Content-Type: text/xml");        
+        echo $retConnect;
+    }
 }
